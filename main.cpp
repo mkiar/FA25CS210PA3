@@ -117,9 +117,33 @@ void printPath(pair<int,int> exitcell,
 // STUDENTS IMPLEMENT DFS HERE
 // Add arguments, return type, and logic
 // ----------------------------------------------------------
-// bool dfs(……) {
-//     // Your code here
-// }
+bool dfs(int ent_r, int ent_c, vector<vector<int>>& maze, vector<vector<bool>> visited, vector<vector<int>>& parent_r, vector<vector<int>>& parent_c, int exit_r, int exit_c) {
+    // out of bounds check
+    if (ent_r >= 0 && ent_r < maze.size() && ent_c >= 0 && ent_c < maze[0].size()) {
+        cout << "Out of bounds";
+        return false;
+    }
+    // wall check
+    if (maze[ent_r][ent_c] == 1) {
+        cout << "Current coords as wall";
+        return false;
+    }
+    // visited check
+    if (visited[ent_r][ent_c]) {
+        cout << "Current coords have been checked already";
+        return false;
+    }
+    visited[ent_r][ent_c] = true;
+    // check if current coords is the exit
+    if (ent_r == exit_r && ent_c == exit_c) {
+        return true;
+    }
+    // check all 4 directions for neighbors
+    for (int i = 0; i < 4; i++) {
+        int neighborR = ent_r + dr[i];
+        int neighborC = ent_c + dc[i];
+    }
+}
 
 
 // ----------------------------------------------------------
