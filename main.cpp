@@ -118,30 +118,52 @@ void printPath(pair<int,int> exitcell,
 // Add arguments, return type, and logic
 // ----------------------------------------------------------
 bool dfs(int ent_r, int ent_c, vector<vector<int>>& maze, vector<vector<bool>> visited, vector<vector<int>>& parent_r, vector<vector<int>>& parent_c, int exit_r, int exit_c) {
+    int startedCoordRow = ent_r;
+    int startedCoordCol = ent_c;
     // out of bounds check
-    if (ent_r >= 0 && ent_r < maze.size() && ent_c >= 0 && ent_c < maze[0].size()) {
-        cout << "Out of bounds";
+    if (ent_r <= 0 && ent_r > maze.size() && ent_c <= 0 && ent_c > maze[0].size()) {
+        cout << "Out of bounds\n";
         return false;
     }
     // wall check
     if (maze[ent_r][ent_c] == 1) {
-        cout << "Current coords as wall";
+        cout << "Current coords at wall\n";
         return false;
     }
     // visited check
     if (visited[ent_r][ent_c]) {
-        cout << "Current coords have been checked already";
+        cout << "Current coords have been checked already\n";
         return false;
     }
     visited[ent_r][ent_c] = true;
     // check if current coords is the exit
     if (ent_r == exit_r && ent_c == exit_c) {
+        cout << "Current coords at exit";
         return true;
     }
     // check all 4 directions for neighbors
     for (int i = 0; i < 4; i++) {
         int neighborR = ent_r + dr[i];
         int neighborC = ent_c + dc[i];
+
+        // debugging purposes
+        if (dr[0] == neighborR && dc[0] == neighborC) {
+            cout << "Going up. Started from (" << ent_r << ", " << ent_c << ")";
+            cout << "Current coords at (" << neighborR << ", " << neighborC << ")\n";
+        } else if (dr[1] == neighborR && dc[1] == neighborC) {
+            cout << "Going right. Started from (" << ent_r << ", " << ent_c << ")";
+            cout << "Current coords at (" << neighborR << ", " << neighborC << ")\n";
+        } else if (dr[2] == neighborR && dc[2] == neighborC) {
+            cout << "Going down. Started from (" << ent_r << ", " << ent_c << ")";
+            cout << "Current coords at (" << neighborR << ", " << neighborC << ")\n";
+        } else if (dr[3] == neighborR && dc[3] == neighborC) {
+            cout << "Going left. Started from (" << ent_r << ", " << ent_c << ")";
+            cout << "Current coords at (" << neighborR << ", " << neighborC << ")\n";
+        }
+
+        if (dfs(neighborR, neighborC, maze, visited, parent_r, parent_c, exit_r, exit_c)) {
+            return true;
+        }
     }
 }
 
@@ -183,17 +205,17 @@ int main() {
     // STUDENT WORK:
     // Call your DFS, track visited, and fill parent_r and parent_c
     // ------------------------------------------------------
-    // bool found = dfs(ent_r, ent_c, maze, visited, parent_r, parent_c, exit_r, exit_c);
+    bool found = dfs(ent_r, ent_c, maze, visited, parent_r, parent_c, exit_r, exit_c);
 
     // ------------------------------------------------------
     // STUDENT WORK:
     // If found, print the path
     // ------------------------------------------------------
-    // if (found) {
-    //     printPath(exitcell, parent_r, parent_c, ent_r, ent_c);
-    // } else {
-    //     cout << "\nNo path exists.\n";
-    // }
+    if (found) {
+        printPath(exitcell, parent_r, parent_c, ent_r, ent_c);
+    } else {
+        cout << "\nNo path exists.\n";
+    }
 
     return 0;
 }
