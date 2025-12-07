@@ -120,44 +120,25 @@ void printPath(pair<int,int> exitcell,
 bool dfs(int ent_r, int ent_c, vector<vector<int>>& maze, vector<vector<bool>>& visited, vector<vector<int>>& parent_r, vector<vector<int>>& parent_c, int exit_r, int exit_c) {
     // out of bounds check
     if (ent_r < 0 || ent_r >= maze.size() || ent_c < 0 || ent_c >= maze[0].size()) {
-        cout << "Out of bounds\n";
         return false;
     }
     // wall check
     if (maze[ent_r][ent_c] == 1) {
-        cout << "Current coords at wall\n";
         return false;
     }
     // visited check
     if (visited[ent_r][ent_c]) {
-        cout << "Current coords have been checked already\n";
         return false;
     }
     visited[ent_r][ent_c] = true;
     // check if current coords is the exit
     if (ent_r == exit_r && ent_c == exit_c) {
-        cout << "Current coords at exit";
         return true;
     }
     // check all 4 directions for neighbors
     for (int i = 0; i < 4; i++) {
         int neighborR = ent_r + dr[i];
         int neighborC = ent_c + dc[i];
-
-        // debugging purposes
-        if (i == 0) {
-            cout << "Going up. Started from (" << ent_r << ", " << ent_c << ")\n";
-            cout << "Current coords at (" << neighborR << ", " << neighborC << ")\n";
-        } else if (i == 1) {
-            cout << "Going right. Started from (" << ent_r << ", " << ent_c << ")\n";
-            cout << "Current coords at (" << neighborR << ", " << neighborC << ")\n";
-        } else if (i == 2) {
-            cout << "Going down. Started from (" << ent_r << ", " << ent_c << ")\n";
-            cout << "Current coords at (" << neighborR << ", " << neighborC << ")\n";
-        } else if (i == 3) {
-            cout << "Going left. Started from (" << ent_r << ", " << ent_c << ")\n";
-            cout << "Current coords at (" << neighborR << ", " << neighborC << ")\n";
-        }
 
         // recursive method
         if (dfs(neighborR, neighborC, maze, visited, parent_r, parent_c, exit_r, exit_c)) {
